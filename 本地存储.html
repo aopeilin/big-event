@@ -23,6 +23,18 @@
       setBtn.onclick = function () {
         localStorage.setItem("name", ipt.value);
       };
+      //获取数据
+      getBtn.onclick = function () {
+        console.log(localStorage.getItem("name"));
+      };
+      //删除数据
+      removeBtn.onclick = function () {
+        localStorage.removeItem("name", ipt.value);
+      };
+      //删除/情况数据
+      clearBtn.onclick = function () {
+        localStorage.clearItem("name", ipt.value);
+      };
     </script>
   </body>
 </html>

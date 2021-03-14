@@ -39,22 +39,52 @@ $(function () {
     let data = $(this).serialize();
 
     //发送ajax请求  axios  已引入axios的js文件
-    axios
-      .post("http://ajax.frontend.itheima.net/api/reguser", data)
-      .then(function (res) {
-        // console.log(res);
+    //  http://api-breakingnews-web.itheima.net
+    axios.post("/api/reguser", data).then(function (res) {
+      // console.log(res);
 
-        //判断注册失败
-        if (res.data.status !== 0) {
-          return layer.msg(res.data.message);
-        }
+      //判断注册失败
+      if (res.data.status !== 0) {
+        return layer.msg(res.data.message);
+      }
 
-        // 注册成功
+      // 注册成功
 
-        layer.msg("注册成功, 请登录", { icon: 6 });
+      layer.msg("注册成功, 请登录", { icon: 6 });
 
-        // 2.登录界面
-        $("#showLogin").click();
+      // 2.登录界面
+      $("#showLogin").click();
+    });
+  });
+
+  //=============== 完成登录功能 ===============
+  $(".login-form").on("submit", function (e) {
+    e.preventDefault();
+
+    //2.获取变单数据
+    let data = $(this).serialize();
+
+    //发送ajax请求  axios  已引入axios的js文件
+    //  http://api-breakingnews-web.itheima.net
+    axios.post("/api/login", data).then(function (res) {
+      // console.log(res);
+
+      //判断登录失败
+      if (res.data.status !== 0) {
+        return layer.msg(res.data.message);
+      }
+
+      // 登录成功
+      //把服务器响应回来的 token 信息给存储到本地存储中(localStorage)
+      // 跳转到后台主页
+      localStorage.setItem("token", res.data.token);
+      // layer.msg("登录成功", { icon: 6 });
+      // location.href = "index练习.html";
+
+      //优化版本
+      layer.msg("登录成功", { icon: 6 }, function () {
+        location.href = "index练习.html";
       });
+    });
   });
 });

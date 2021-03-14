@@ -53,22 +53,21 @@ $(function () {
     let data = $(this).serialize();
 
     //发送ajax请求 JQ的$.ajax() 或者 axios
-    axios
-      .post("http://ajax.frontend.itheima.net/api/reguser", data)
-      .then(function (res) {
-        // console.log(res);
+    // http://api-breakingnews-web.itheima.net
+    axios.post("/api/reguser", data).then(function (res) {
+      // console.log(res);
 
-        //注册失败
-        if (res.data.status !== 0) {
-          return layer.msg(res.data.message);
-        }
+      //注册失败
+      if (res.data.status !== 0) {
+        return layer.msg(res.data.message);
+      }
 
-        //注册成功
-        layer.msg("注册成功，请登录", { icon: 6 });
+      //注册成功
+      layer.msg("注册成功，请登录", { icon: 6 });
 
-        // 显示登录界面
-        $("#showLogin").click();
-      });
+      // 显示登录界面
+      $("#showLogin").click();
+    });
   });
 
   // ================ 实现登录功能 ================
@@ -78,29 +77,27 @@ $(function () {
     // 表单数据
     let data = $(this).serialize();
 
-    //发送请求
-    axios
-      .post("http://ajax.frontend.itheima.net/api/login", data)
-      .then(function (res) {
-        //登录失败
-        if (res.data.status !== 0) {
-          return layer.msg(res.data.message);
-        }
+    //发送请求 http://api-breakingnews-web.itheima.net
+    axios.post("/api/login", data).then(function (res) {
+      //登录失败
+      if (res.data.status !== 0) {
+        return layer.msg(res.data.message);
+      }
 
-        //登录成功
-        // layer.msg("登录成功, 跳转中", { icon: 6 });
-        //跳转页面
-        // location.href = "./index.html";
+      //登录成功
+      // layer.msg("登录成功, 跳转中", { icon: 6 });
+      //跳转页面
+      // location.href = "./index.html";
 
-        //把服务器响应回来的 token 信息给存储到本地存储中(localStorage)
-        localStorage.setItem("token", res.data.token);
+      //把服务器响应回来的 token 信息给存储到本地存储中(localStorage)
+      localStorage.setItem("token", res.data.token);
 
-        //以上代码细节优化： layer.msg当它隐藏之后才跳转页面
-        layer.msg("登录成功", { icon: 6 }, function () {
-          // do something
-          // 跳转页面，跳转到index页面
-          location.href = "./index.html";
-        });
+      //以上代码细节优化： layer.msg当它隐藏之后才跳转页面
+      layer.msg("登录成功", { icon: 6 }, function () {
+        // do something
+        // 跳转页面，跳转到index页面
+        location.href = "./index.html";
       });
+    });
   });
 });
